@@ -295,7 +295,7 @@ router.route("/order/:email").get(auth,async (request, response) => {
   const _id = request.params._id;
   const client = await createConnection();
   const cart=await CancelOrder(client,_id);
-  response.send({ message: "successfully order cancel " });
+  response.send({ message: "successfully order got cancelled " });
  
 });
 
