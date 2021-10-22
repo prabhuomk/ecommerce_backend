@@ -1,4 +1,4 @@
-import {getAdmin,insertAdmin,insertproduct,updateproduct,deleteproduct, }from "../helper/admin.js";
+import {getAdmin,insertAdmin,insertproduct,updateproduct,deleteproduct, getOneproduct }from "../helper/admin.js";
 import {listbookproduct, listOneproduct,productUpdate,GetCart,OrderDelivered }from "../helper/user.js"
 import {createConnection} from "../index.js";
 import express, { request, response }  from 'express';
@@ -64,9 +64,15 @@ router.route("/addproduct").post(auth,async (request,response)=>{
     const {img_src,product_name,product_price}=request.body;
    
     const client=await createConnection();
+    const find=await getOneproduct(client,{product_name:product_name});
+    if(find){
     const productList= await insertproduct(client,{img_src:img_src,product_name:product_name,product_price:Number(product_price)});
     
     response.send({message:"product got added"} );
+    }
+    else{
+        response.send({message:"product name shoild be unique added"} );
+    }
     
 });
 
