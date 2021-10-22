@@ -65,13 +65,13 @@ router.route("/addproduct").post(auth,async (request,response)=>{
    
     const client=await createConnection();
     const find=await getOneproduct(client,{product_name:product_name});
-    if(find){
+    if(!find){
     const productList= await insertproduct(client,{img_src:img_src,product_name:product_name,product_price:Number(product_price)});
     
     response.send({message:"product got added"} );
     }
     else{
-        response.send({message:"product name shoild be unique added"} );
+        response.send({message:"product name should be unique "} );
     }
     
 });
